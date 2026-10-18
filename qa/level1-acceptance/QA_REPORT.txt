@@ -1,0 +1,140 @@
+ALMOST MADE IT! — LEVEL 1 GAMEPLAY ACCEPTANCE
+Test date: 2026-10-18 | Build: verified WORLD-25
+Result: automated gameplay acceptance PASSED; mobile/device acceptance PENDING.
+
+EXECUTED RESULTS
+17 runtime test runs / 1,197 assertions passed. Three new QA scripts parse cleanly.
+Godot 4.6.3, headless runtime, 60 process FPS and 30/60/120Hz fixed physics.
+These are real CharacterBody3D/AnimatableBody3D physics and parsed screen-touch
+input events, not a substitute controller or numerical course simulation.
+
+CONTINUOUS COMPLETION TIMES
+Physics ticks/s   Simulated game time   Falls   Coins   Victory count
+30                164.63s (2:44.63)      0       5/5     1
+60                159.18s (2:39.18)      0       5/5     1
+120               160.12s (2:40.12)      0       5/5     1
+
+The complete 855.145m route traversed all 60 landings and 59 connections:
+21 bridge links, 25 jump links, 13 moving-platform links, all five districts.
+The driver starts at the real spawn and uses actual ScreenTouch/ScreenDrag and
+jump events. It does not teleport the player, remove obstacles, grant immunity
+or change obstacle timing while traversing. It knows the course and steers around
+hazards where possible; incidental hits still occur (2/2/4 by tick rate).
+Three additional camera-instrumented continuous runs reproduced these times.
+No scene change occurs during ordinary section transitions.
+
+These successful scripted runs fall within the 120–180s design target. They are
+NOT measurements of a human first clear. Real first-time touch players may take
+longer due to learning, waiting, misses and recovery. That target needs device
+playtesting. Move speed remains 9.8, jump speed 10.4 and gravity 22, unchanged.
+
+ACCEPTANCE MATRIX
+1 Safe spawn: PASS. Supported floor, stationary start; repeated restart checked.
+2 Swipe movement: PASS. Real input events, cardinal/diagonal directions and hold.
+3 No autorun: PASS. Untouched 15s start and restart; player and camera stationary.
+4 Jump response: PASS. Real jump touches, in-place jump, multitouch and air release.
+5 Obstacle contact: PASS in tested configurations. All 9 bars + 5 pendulums,
+  individually tested at 30/60/120Hz. Every instance registers and separates the
+  real avatar. The separate timed solid shutter blocks forward drag when closed.
+6 Knockback: PASS. Geometric normal impulse and measurable displacement; held drag
+  cannot immediately cancel external velocity. One sustained contact cannot stack
+  repeated hit impulses. Comparable 0.5/1.5 rad/s trials transferred 1.0417/3.1847
+  impulse magnitude at 60Hz. Clean jump and outside-reach dodge remain safe.
+7 Gaps: PASS. All 25 jump connections and every moving gap traversed at all rates.
+8 Moving-platform carry: PASS. All 13 actual route ferries tested individually
+  with zero motor input at all rates. Actor/platform displacement agrees within
+  the 0.16m test tolerance; native platform velocity is logged. Slightly inclined
+  diagonal ferries included. Two lower gorge recovery decks also physically used.
+9 Camera through curves/elevation: PASS at sampled positions. Fixed angle,
+  following actual body; 0 out-of-screen/HUD-overlap center samples in 4,938 /
+  9,550 / 9,606 route observations at 30/60/120Hz. No drift while stationary.
+10 Checkpoints: PASS. All 4 activate via real overlaps and restore correct poses.
+11 Fair respawn: PASS in tested phases. Real falls before the first checkpoint
+  and after all four checkpoints count once, hold input, reset movement/knockback,
+  recenter camera and survive beyond protection. Protection expires; solid
+  collision remains enabled. Restart during recovery and pause/resume tested.
+12 Coins: PASS. Five optional pickups collected by physical overlaps on full runs.
+13 Winding progress: PASS. Ordered route remains valid at each landing and after
+  checkpoint recovery. Progress display alone and untracked teleport cannot win.
+14 Finish once: PASS. Normal and jumping entry with missing coins; actual overlapping
+  DYING/RESPAWNING bodies rejected. Completed results freeze and duplicate finish
+  or death requests cannot change them. Continuous run emits exactly one victory.
+15 Restart/replay: PASS. Actual REPLAY touch button restores clean run; new start
+  remains stationary for 15s. Results and per-run counters reset.
+16 Continuity: PASS. No scene change across the five areas during traversal.
+17 Scenery visibility: PARTIAL. All scenery has no collision objects. New opaque
+  landmark bounds clear camera-to-avatar sightlines at all 60 landing centers;
+  route screen-projection samples remain visible. Existing WORLD-25 rendered
+  screenshots were previously inspected; no fresh rendered captures in this QA
+  pass. Headless tests cannot prove foliage never visually occludes an off-center
+  avatar or camera at every possible position. Device visual review still required.
+18 Supported mobile performance: UNEXECUTED. No iPhone/iPad/Xogot connection.
+  No supported-device frame-time, thermal, memory or long-session measurements.
+  Headless throughput and previous software-OpenGL captures do not establish FPS.
+
+ACTUAL DIAGNOSTIC EXAMPLES
+COURSE23_COMPLETE seconds=159.18 falls=0 hits=2 coins=5 won=true
+ACCEPTANCE_ROUTE hz=60 samples=9550 offscreen=0 scene_changes_during_run=0 victories=1
+ACCEPTANCE_SHUTTER blocked=true actor=(-15.00024, 0.818807, -238.3392)
+ACCEPTANCE_CAMERA checkpoint=-1 falling_frames=29 hidden=0 max_lens=12.53131
+ACCEPTANCE_CAMERA checkpoint=3 falling_frames=29 hidden=0 max_lens=12.50824
+Full per-instance body paths, impulses, normals, actor displacement, native ferry
+velocity and measured penetration are in the attached logs. All measured hazard
+penetrations in the per-instance sampled post-hit windows were zero (tolerance
+0.07m); this does not prove zero transient overlap between sampling instants.
+
+CONFIRMED BUGS / REPAIRS
+No reproducible gameplay defect was found in this acceptance pass. No gameplay,
+physics, scenery, difficulty or level-layout changes were necessary.
+The new QA harness initially made three incorrect assumptions: nonzero vertical
+travel identified only the shutter (two diagonal ferries also rise slightly),
+net displacement detected all ferry travel (turnarounds can return near the start),
+and a process/physics observation occurred once per physics tick at 120Hz.
+Those harness issues were corrected: classify the vertical-only shutter, measure
+ferry path length, and check actual physics-frame duration independently of
+camera sample count. All affected suites were rerun at all three rates. Initial
+failed diagnostic logs are retained with fixture-error names; they are not
+reported as passing game tests.
+
+FILES CHANGED
+New tests only:
+ tests/level1_acceptance.gd
+ tests/level1_route_acceptance.gd
+ tests/level1_camera_recovery.gd
+New QA report, JSON summaries, preservation audit and execution logs.
+All 229 runtime/asset files in the verified WORLD-25 archive are byte-identical.
+No gameplay scripts, scenes, materials, controls, Levels 2–10 or settings changed.
+The existing WORLD-25 game ZIP remains valid; no new game build is needed.
+
+XOGOT MANUAL ACCEPTANCE CHECKLIST — STILL REQUIRED
+1 Import the verified WORLD-25 project into a distinct folder. Confirm the title
+  Almost Made It! WORLD-25, then select Level1 First Steps. Regenerate imports.
+2 On both iPhone and iPad, leave untouched 15s; player/camera must stay still.
+3 Tap without drag, drag all directions, release, jump in place and move+jump
+  with two fingers. Release either finger independently. Test pause/focus loss.
+4 Complete all five areas without fixtures. Time a first clear and a learned run;
+  record falls and coins. Do not change player speed to force 2–3 minutes.
+5 At each bar/ball, stand still for a sweep and hold forward into contact. Watch
+  actual avatar separation; any visible pass-through fails, even if a hit logs.
+  Try safe jump/dodge and compare slow/fast impacts. Check the shutter cycle.
+6 Ride every moving platform without touch, especially diagonal gorge ferries.
+  Test the narrow bridges, all gaps and both lower recovery decks.
+7 Fall before a checkpoint and after each checkpoint; verify exactly one fall,
+  proper camera framing before input returns, no stale drag and finite protection.
+  Pause/restart during recovery. Confirm no immediate forced second death.
+8 Inspect foreground trees, hazards and camera through curves and near edges.
+  Confirm the avatar stays visible while falling and after knockback.
+9 Finish normally, while jumping and with missing coins; tap replay repeatedly.
+  Results must freeze, count accurately and restart once into an idle valid state.
+10 Profile a sustained full run on each supported device using Xogot's monitors.
+   Record device/iOS/Xogot versions, scenery quality, FPS, CPU/GPU frame times,
+   memory and thermal behavior. Set explicit per-device 30/60FPS acceptance budgets
+   before signing off; no device performance budget is certified by this report.
+
+READINESS
+Suitable for structured iPhone/iPad acceptance testing. The tested automated
+route, physical contacts, camera/recovery and finish/replay behavior are stable.
+Not production-approved: mobile performance, real-device visual occlusion, touch
+feel, human first-clear duration and broader timing-phase robustness remain open.
+Existing terrain faceting and sky banding are known visual limitations from the
+WORLD-25 review; this pass did not attempt further visual redesign.
