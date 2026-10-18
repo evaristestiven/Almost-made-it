@@ -1,0 +1,69 @@
+name: Package verified FOREST-28
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/package-forest28.yml', 'qa/forest28-overlay.b64']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: forest28-package
+  cancel-in-progress: false
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble and verify the tested project
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import urllib.request,hashlib,zipfile,io,base64,json,shutil
+          root=Path('.')
+          source=urllib.request.urlopen('https://raw.githubusercontent.com/evaristestiven/Almost-made-it/main/downloads/Almost-Made-It-ADVENTURE-27.zip',timeout=120).read()
+          assert hashlib.sha256(source).hexdigest()=='976faf357299ecb06741b35b32efd5c3218d2df0b0fca4566152424b5cb79ec3'
+          work=Path('/tmp/forest28-package/AlmostMadeIt-FOREST-28');work.mkdir(parents=True,exist_ok=True)
+          with zipfile.ZipFile(io.BytesIO(source)) as z:
+              assert z.testzip() is None
+              for item in z.infolist():
+                  name=item.filename.split('/',1)[1]
+                  if not name or item.is_dir():continue
+                  dest=work/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(z.read(item))
+          data=base64.b64decode((root/'qa/forest28-overlay.b64').read_text())
+          assert hashlib.sha256(data).hexdigest()=='0e6781a83b24df4c01dd50eadf559d84fa8fb02aadbd232c520f3d163893fc93'
+          with zipfile.ZipFile(io.BytesIO(data)) as z:
+              assert z.testzip() is None
+              for name in z.namelist():
+                  dest=work/name;dest.parent.mkdir(parents=True,exist_ok=True);dest.write_bytes(z.read(name))
+          manifest=json.loads((work/'FOREST28_RUNTIME_SHA256.json').read_text())
+          for name,digest in manifest.items():assert hashlib.sha256((work/name).read_bytes()).hexdigest()==digest,name
+          for folder in work.glob('*-screenshots'):
+              if folder.is_dir():shutil.rmtree(folder)
+          for file in work.glob('START-HERE-*'):
+              if file.name!='START-HERE-FOREST-28.txt':file.unlink()
+          for file in work.glob('*MANIFEST.json'):file.unlink()
+          for file in work.glob('*_RUNTIME_SHA256.json'):
+              if file.name!='FOREST28_RUNTIME_SHA256.json':file.unlink()
+          note='\nDELIVERY NOTE: This GitHub package reconstructs the verified runtime from the original asset archive and the exact tested source update. All 241 runtime/configuration files are SHA-256 checked. New gameplay screenshots remain in the execution workspace; they are not included in this delivery archive.\n'
+          report=(work/'START-HERE-FOREST-28.txt').read_text()+note
+          (work/'START-HERE-FOREST-28.txt').write_text(report)
+          target=root/'downloads/Almost-Made-It-FOREST-28.zip'
+          with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED) as z:
+              for f in sorted(work.rglob('*')):
+                  if f.is_file() and '.godot' not in f.parts:z.write(f,f.relative_to(work.parent))
+          with zipfile.ZipFile(target) as z:
+              assert z.testzip() is None
+              for name,digest in manifest.items():assert hashlib.sha256(z.read(work.name+'/'+name)).hexdigest()==digest,name
+          checksum=hashlib.sha256(target.read_bytes()).hexdigest()
+          (root/'downloads/Almost-Made-It-FOREST-28.sha256').write_text(checksum+'  '+target.name+'\n')
+          (root/'downloads/FOREST28_REPORT.txt').write_text(report)
+          print('VERIFIED',len(manifest),'runtime/configuration files;',target.stat().st_size,'bytes;',checksum)
+          PY
+      - name: Publish the verified download
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add downloads/Almost-Made-It-FOREST-28.zip downloads/Almost-Made-It-FOREST-28.sha256 downloads/FOREST28_REPORT.txt
+          git commit -m "Publish verified FOREST-28 game project"
+          git push origin HEAD:main
