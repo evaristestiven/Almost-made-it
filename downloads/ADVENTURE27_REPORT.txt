@@ -1,0 +1,126 @@
+ALMOST MADE IT! — ADVENTURE-27
+Level1 gameplay variety, precision and optional exploration + forest-style polish
+
+IMPLEMENTED
+1 Three raised, offset stepping-stone connections replace straight bridge spans:
+  Starting Garden cell4, Training Courtyard cell18 and Finish Plaza cell54. Each
+  has a real supported landing; players can chain short precision jumps or try
+  the longer direct jump where their skill permits. No movement speed changes.
+2 Two optional raised coin gardens branch from garden cell7 and hills cell43.
+  Five total coins remain. The main route remains completable without these two
+  coins. Gold ground arrows and small labels signal the alcoves. Flowers stay
+  behind the pickup and the center of the landing stays clear.
+3 Courtyard sweep pivots alternate between left and right approaches. Their
+  existing deterministic angular speeds and solid collision implementation are
+  preserved. Waiting/recovery courtyards remain; there is no random timing.
+4 Two gorge ferries now combine existing side travel with 0.4m vertical amplitude.
+  Their visible meshes and enabled solid shapes move together through native
+  AnimatableBody3D platform physics. All 13 route ferries remain in use.
+5 Brighter soft grass and warmer dirt paths, subtle foliage color/backlighting,
+  additional grounded imported tree/plant clusters and below-edge rock details
+  move the scenery toward Preview_2's green forest palette. The existing windmills,
+  waterfalls, houses, five districts and crown finish remain.
+
+PRESERVED
+Swipe-and-drag, no joystick, no autorun, jump control, avatar, camera, shared
+solid/impact physics, checkpoint rules, four checkpoints, five optional coins,
+fall counting, results and progression. All Levels2–10 remain unchanged.
+The main 60-landing route remains continuous. Its 59 links are now 18 bridges,
+25 ordinary jump links, 13 moving-platform links and 3 stepping-stone links.
+Five additional solid landing bodies support the stones and optional gardens.
+The original two lower gorge recovery ledges are preserved and still tested.
+
+RUNTIME EVIDENCE
+17 source runs / 982 assertions passed.
+14 fresh-package suites / 842 assertions passed.
+120 GDScript parse checks passed, with final edited scripts checked again.
+Godot4.6.3, fixed-step runtime; actual touch-input events and physical bodies.
+
+Full uninterrupted all-coin completions:
+30Hz: 169.47 simulated seconds, 0 falls, 5 coins, one victory.
+60Hz: 165.08 simulated seconds, 0 falls, 5 coins, one victory.
+120Hz:164.48 simulated seconds, 0 falls, 5 coins, one victory.
+The main route without either coin detour:161.10s,0 falls,3 coins,one victory.
+These are knowledgeable scripted runs, not human first-clear measurements.
+No player speed, gravity or jump constants were changed to obtain these times.
+
+All 9 bars and 5 pendulums individually tested for real contact, geometric
+impulse, displacement and separation at all three physics tick rates.
+All 13 ferries carry an idle avatar at all three rates, including the new rising
+ferries; closed timed shutter blocks forward drag. Held movement preserves
+external impact velocity. Clean jumps/dodges and recovery decks remain usable.
+All checkpoints, real falls, camera readiness, protection expiry, input clearing,
+restart, replay, finish guards and single authoritative victory passed.
+Full-route camera observations passed at all three rates with no out-of-view
+avatar samples or scene loads between the five ordinary districts.
+Multitouch, release, no autorun and six simulated phone/tablet viewport sizes pass.
+Fresh-package tests also physically complete all 10 existing courses and verify
+saved progression in a separate process; this does not change Levels2–10.
+
+VISUAL VERIFICATION
+Seven actual gameplay-camera compositions captured and inspected with GL
+Compatibility software rendering. Two coin views were recaptured after replacing
+an obstructive sign with small labels and ground arrows. No shader errors.
+Screenshots are position fixtures, not proof of traversal; full-route physics
+logs provide the traversal evidence. Device performance is not certified.
+The trees, rocks and Plant_1 are real existing imported models. New grass is a
+lightweight custom instanced mesh/shader, not a newly imported MegaKit grass model.
+
+ASSETS
+Existing complete source sets reused without pack-wide processing:
+CommonTree_3, CommonTree_4, Rock_Medium_3, Plant_1,
+RockPath_Square_Thin and Pebble_Round_2; original buffers and textures preserved.
+Only these six sets are available here. Preview_2's evergreen trees, ferns and
+other flower/grass varieties are not claimed as imported. No substitute sphere
+or cone trees were created. No screenshot was used as an importable 3D model.
+
+FILES
+Modified Level1 runtime:
+ scripts/levels/first_steps_course.gd
+ scripts/levels/first_steps.gd
+ scripts/environment/adventure_garden.gd
+ scripts/environment/garden_world_details.gd
+ shaders/world25/ground.gdshader
+New: shaders/adventure27/grass.gdshader and UID sidecar.
+Updated QA navigation: tests/course23_driver.gd, tests/ninja_challenges.gd.
+New: tests/adventure27_features.gd, tests/adventure27_rendered.gd plus sidecars.
+New reports, JSON audits, logs and screenshots. No .tscn files changed.
+224 existing runtime/asset files are byte-identical to the preceding build;
+shared player/camera/touch/physics and all Levels2–10 are preserved.
+The packaged project title is Almost Made It! ADVENTURE-27 for identification.
+
+VALIDATION FIXES
+The previous test driver assumed a world-right bypass; it now follows each
+curved platform's local side and its authored approach. A fresh-package
+persistence check initially lacked its prerequisite completed-campaign save;
+the full ten-course producer was executed, then the separate-process reload
+passed. No save behavior was changed to make that test pass.
+
+PERFORMANCE AND REMAINING LIMITATIONS
+Regional MultiMeshes, cached imported meshes/materials, visibility culling and
+GPU grass/water/cloth motion are retained. No new expensive lights, physics
+vegetation, video capture or full-pack import. Detailed draw/primitive counts
+are in the render logs; they are not mobile FPS measurements.
+This is a targeted upgrade, not an exact visual reproduction of Preview_2.
+Some rectangular/faceted landforms, sky banding, simple buildings and limited
+plant variety remain. iPhone/iPad GPU performance, thermals, real touch feel,
+human first-clear difficulty and all off-center scenery occlusions are unverified.
+The first hidden coin alcove can sit outside the initial camera frame; its
+on-route gold arrow guides exploration toward it. The main route needs no detour.
+
+XOGOT
+Download Almost-Made-It-ADVENTURE-27.zip into a NEW folder and keep WORLD-25
+as a backup. Unzip in Files. Import the extracted project.godot in Xogot and
+confirm title Almost Made It! ADVENTURE-27. Allow cache regeneration. Launch
+Level1 First Steps, test three stone links, both optional gardens, alternating
+courtyard routes and the two rising gorge ferries. Try both collecting and
+skipping the detours, then finish/replay. Verify knockback and recovery with
+held drag, pause/restart, and protection expiry. Profile sustained play on both
+phone and tablet; use the existing scenery-quality option if needed. A new
+project folder/title may use separate local save storage; keep the older copy.
+
+READINESS
+Automated gameplay/regression checks passed; ready for device acceptance testing.
+Not production approved until Xogot touch, visual and performance checks pass.
+
+DELIVERY NOTE: This GitHub package reconstructs the verified runtime from the original asset archive and the exact tested source update. All 232 runtime/configuration files are SHA-256 checked. New gameplay screenshots remain in the execution workspace; they are not included in this delivery archive.
