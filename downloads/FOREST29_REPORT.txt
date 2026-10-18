@@ -1,0 +1,80 @@
+ALMOST MADE IT! — FOREST-29
+Controlled integration of the newly supplied CommonTree_5
+
+IMPLEMENTED
+Imported CommonTree_5.gltf and its original 252996-byte CommonTree_5.bin.
+Original source filenames, geometry, UVs and texture references are preserved.
+Godot 4.6.3 regenerated scene import metadata. The model has 3182 triangles,
+separate bark/foliage surfaces, normals and UVs. It reuses existing verified
+Bark_NormalTree.png, Bark_NormalTree_Normal.png and Leaves_NormalTree_C.png.
+No duplicate textures or entire-pack import.
+
+Level1 now mixes 154 CommonTree_5, 201 CommonTree_3, 99 CommonTree_4,
+92 Pine_1 and 100 Pine_5 instances. The new asset replaces selected existing
+broadleaf forest seeds, without adding more trees or moving supported roots.
+The existing detailed entrance trees and pine placements remain intact.
+Reuse of regional MultiMesh batches, ground-supported roots, distance culling
+and background shadow settings is retained. No vegetation collision is added.
+The new silhouette adds variety; this is a targeted asset integration, not a
+full environment rebuild or a claim to match every reference image.
+
+FILES
+Modified: scripts/environment/adventure_garden.gd (Level1-only species selection).
+Added under assets/nature/quaternius/CommonTree_3/:
+ CommonTree_5.gltf, CommonTree_5.bin, regenerated CommonTree_5.gltf.import.
+Added: scenes/visual_tests/broadleaf_test.tscn (new tree and existing comparison
+model, ground and sunlight); tests/forest29.gd; tests/forest29_rendered.gd;
+Godot-generated test .uid files; docs/FOREST29_REPORT.txt.
+Packaged project.godot title is Almost Made It! FOREST-29.
+No controls, player physics, obstacles, camera, HUD, gameplay course definitions,
+coins, checkpoint rules, progress or victory logic changed. Runtime source
+hash comparison confirms all other pre-existing runtime files are untouched.
+Levels2–10 visual and collision A/B snapshots are identical.
+
+EXECUTED TESTS
+Five source suites: 470 assertions passed (forest29 21, forest28 17,
+world_integration 29, level1_route_acceptance 71, world1_regression 332).
+Three fresh-package suites: 424 assertions passed (forest29 21,
+level1_route_acceptance 71, world1_regression 332).
+Source and clean-package Godot imports passed without resource/script errors.
+Four GL Compatibility screenshots captured and inspected: isolated model pair,
+new tree bark/leaves close-up, actual gameplay cameras in Starting Garden and
+Windmill Hills. Bark/normal/leaf textures and alpha masking render correctly.
+Screenshots remain in the execution workspace, not the public package.
+Full simulated continuous Level1 route at 60Hz: 165.08 seconds (2:45.08),
+zero falls, five coins, one victory, no offscreen avatar samples or scene loads.
+Restart included 15 seconds idle with stationary avatar/camera. These scripted
+simulation times are not human first-clear times or mobile frame-time evidence.
+All10-level regression and existing physics/integration suites passed.
+A/B scenery checks confirm identical Level1 gameplay collision shapes, transforms,
+layers and masks. All forest roots and tree heights remain unchanged.
+
+INCOMPLETE FILES EXCLUDED
+CommonTree_3 and CommonTree_4 supplied pairs duplicate working installed assets.
+TwistedTree_1 through TwistedTree_5 now have geometry buffers, but all still lack:
+ Bark_TwistedTree.png
+ Bark_TwistedTree_Normal.png
+ Leaves_TwistedTree_C.png
+The supplied Leaves_TwistedTree.png has a different name and is not substituted.
+These models were not imported or represented by placeholder trees.
+
+LIMITATIONS / PERFORMANCE
+No iPhone/iPad or Xogot session was available; touch feel, device frame pacing,
+GPU cost, thermals and all possible camera/scenery occlusion cases remain unverified.
+The total forest count is unchanged, but a new species needs extra regional
+mesh/material batches. Existing LOD/culling is reused; no mobile FPS claim.
+No new wind simulation, lighting change or unrelated visual redesign was made.
+Existing terrain faceting, cloud banding, simple buildings and limited vegetation
+variety remain. Scenery roots are validated; imported mesh shape may change
+camera occlusion at untested positions. Production readiness is not claimed.
+
+VIEW IN XOGOT
+Download Almost-Made-It-FOREST-29.zip directly, unzip into a NEW folder and keep
+the previous project/saves as backup. Open AlmostMadeIt-FOREST-29/project.godot.
+Let Xogot regenerate its import cache. Confirm title Almost Made It! FOREST-29.
+Start First Steps and compare forest silhouettes in Starting Garden and Windmill
+Hills; complete the course, test drag/jump/knockback/respawn/replay and check FPS.
+For an isolated inspection run scenes/visual_tests/broadleaf_test.tscn.
+A new project folder/title may use separate local save storage.
+
+DELIVERY NOTE: This GitHub package reconstructs the verified runtime from the original asset archive and the exact tested source update. All 245 runtime/configuration files are SHA-256 checked. New gameplay screenshots remain in the execution workspace; they are not included in this delivery archive.
