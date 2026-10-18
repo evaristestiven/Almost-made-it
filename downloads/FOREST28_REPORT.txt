@@ -1,0 +1,93 @@
+ALMOST MADE IT! — FOREST-28
+Verified pine integration, retaining the ADVENTURE-27 gameplay upgrade
+
+ASSETS USED
+Pine_1.gltf + Pine_1.bin (3947 triangles)
+Pine_5.gltf + Pine_5.bin (1646 triangles)
+Leaf_Pine_C.png: original 2048x2048 RGBA source preserved; imported at 1024px
+with mipmaps to reduce texture memory and distant aliasing.
+Bark_NormalTree.png and Bark_NormalTree_Normal.png: verified existing shared
+maps reused. Filenames, geometry bytes, UVs and glTF texture references unchanged.
+The two pines were copied into assets/nature/quaternius/CommonTree_3/ alongside
+the already-present bark maps. No entire-pack import or duplicate bark textures.
+
+PLACEMENT AND RENDERING
+Level1's outer forest now mixes 92 Pine_1 and 100 Pine_5 instances with 302
+CommonTree_3 and 152 CommonTree_4 instances. Original detailed entrance trees
+are preserved. Pine roots follow the actual decorative terrain, and branch
+width is scaled for the existing groves. All use the same regional MultiMesh
+batching and distance culling as the prior broadleaf forest, without colliders.
+Four GL Compatibility captures were inspected: both isolated models, bark/leaf
+close-up, Starting Garden and Windmill Hills. Bark, normal maps, leaf atlas and
+alpha masking render correctly. A separate two-pine test scene is included.
+
+GAMEPLAY UPGRADE RETAINED
+Three raised stepping-stone links, two optional raised coin gardens, alternating
+courtyard approaches and two rising gorge ferries remain from ADVENTURE-27.
+No shared player/input/camera/physics or course configuration changed in this
+pine pass. Level1 still has 5 coins, 4 checkpoints and a continuous five-area route.
+The full 60Hz route, with both optional coin gardens, completed in 165.08 simulated
+seconds, 0 falls, 5 coins and one victory. These are scripted test times, not
+human first-clear or on-device performance measurements. ADVENTURE-27 previously
+passed full traversal at 30/60/120Hz in169.47/165.08/164.48s; those physics settings
+and course definitions are unchanged here. Skipping the optional gardens still
+permits completion; coins are not required to win.
+
+ACTUAL TESTS
+6 source runtime runs / 569 assertions passed.
+4 fresh-package suites / 449 assertions passed.
+122 GDScript parse checks and 4 rendered-view captures passed.
+Tests cover original materials/geometry/normals/UVs, the 1024px import limit,
+terrain-supported trunks, no vegetation colliders, the continuous physical route,
+all 14 hazards and 13 ferries, checkpoints/recovery, finish/replay and all10-level
+regression behavior. Before/after collision snapshots are identical with pines
+on/off, and Levels2–10 visual/collision snapshots remain unchanged.
+The first integration attempt lacked the landscape batch's layer metadata;
+that implementation was replaced with opt-in species metadata through the
+existing batch path. All final logs are free of script/resource errors.
+
+EXACT CHANGES SINCE ADVENTURE-27
+scripts/environment/adventure_garden.gd: Level1 opts selected forest seeds into
+Pine_1/Pine_5; preserves normal placement and dimensions of the other trees.
+scripts/environment/garden_landscape.gd: two optional seed metadata values select
+species/width. Existing callers default to the original broadleaf behavior;
+Levels2–10 do not opt into pines and their visual/collision comparison passes.
+New original assets: Pine_1.gltf/.bin, Pine_5.gltf/.bin, Leaf_Pine_C.png and Godot
+regenerated .import metadata. Source artwork is not edited.
+New tests: tests/forest28.gd, tests/forest28_rendered.gd.
+New isolated scene: scenes/visual_tests/pines_test.tscn.
+Packaged project title: Almost Made It! FOREST-28. Normal startup is level select.
+
+OTHER ATTACHMENTS
+Pine_2, Pine_3 and Pine_4 each have matching supplied geometry buffers and resolvable
+bark/Leaf_Pine_C references. They were checked but not imported in this controlled
+subset; the attachment originals remain untouched.
+TwistedTree_5 is NOT importable from the supplied files. Required missing files:
+ TwistedTree_5.bin (811680 bytes)
+ Bark_TwistedTree.png
+ Bark_TwistedTree_Normal.png
+ Leaves_TwistedTree_C.png
+The supplied Leaves_TwistedTree.png does not have the referenced filename; it
+was not silently renamed or assumed equivalent. Rocks_Desert_Diffuse.png,
+Leaf_Pine.png and Leaves_NormalTree.png are unused by the two imported pines.
+
+LIMITATIONS
+This improves species variety toward Preview_2; it is not the complete preview
+forest or a claim of photorealism. Evergreen foliage is alpha-masked leaf geometry,
+not individual simulated needles. New pines have no physics or CPU wind simulation.
+Existing terrain faceting, sky banding, simpler flowers and buildings remain.
+iPhone/iPad FPS, thermal behavior, real touch feel and all possible camera/tree
+occlusion cases remain unverified. No production-readiness claim is made.
+
+XOGOT
+Download Almost-Made-It-FOREST-28.zip into a NEW folder; retain the previous build
+as backup. Unzip in Files and open AlmostMadeIt-FOREST-28/project.godot in Xogot.
+Allow import-cache regeneration and confirm title Almost Made It! FOREST-28.
+Run Level1 First Steps and look for dark-green pine silhouettes among the existing
+broadleaf trees. Check Starting Garden, the hillside optional coin and the
+continuing route, then test jump/drag/knockback/respawn/replay. Use the included
+scenes/visual_tests/pines_test.tscn to inspect both imported models separately.
+Profile frame times on both phone and tablet; a new project title/folder may use
+separate save storage. Keep the old project rather than deleting its saves.
+
+DELIVERY NOTE: This GitHub package reconstructs the verified runtime from the original asset archive and the exact tested source update. All 241 runtime/configuration files are SHA-256 checked. New gameplay screenshots remain in the execution workspace; they are not included in this delivery archive.
