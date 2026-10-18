@@ -1,0 +1,137 @@
+{
+  "build": "WORLD-25",
+  "engine": "Godot 4.6.3",
+  "headless": true,
+  "tests": [
+    {
+      "test": "first_steps_course",
+      "physics_hz": 30,
+      "passed": true,
+      "assertions": 66,
+      "log": "first_steps_course-hz30.log",
+      "completion": [
+        "seconds=164.63 falls=0 hits=2 coins=5 won=true"
+      ]
+    },
+    {
+      "test": "first_steps_course",
+      "physics_hz": 60,
+      "passed": true,
+      "assertions": 66,
+      "log": "first_steps_course-hz60.log",
+      "completion": [
+        "seconds=159.18 falls=0 hits=2 coins=5 won=true"
+      ]
+    },
+    {
+      "test": "first_steps_course",
+      "physics_hz": 120,
+      "passed": true,
+      "assertions": 66,
+      "log": "first_steps_course-hz120.log",
+      "completion": [
+        "seconds=160.12 falls=0 hits=4 coins=5 won=true"
+      ]
+    },
+    {
+      "test": "ninja_challenges",
+      "physics_hz": 30,
+      "passed": true,
+      "assertions": 34,
+      "log": "ninja_challenges-hz30.log",
+      "completion": []
+    },
+    {
+      "test": "ninja_challenges",
+      "physics_hz": 60,
+      "passed": true,
+      "assertions": 34,
+      "log": "ninja_challenges-hz60.log",
+      "completion": []
+    },
+    {
+      "test": "ninja_challenges",
+      "physics_hz": 120,
+      "passed": true,
+      "assertions": 34,
+      "log": "ninja_challenges-hz120.log",
+      "completion": []
+    },
+    {
+      "test": "first_steps_recovery",
+      "physics_hz": 60,
+      "passed": true,
+      "assertions": 51,
+      "log": "first_steps_recovery-hz60.log",
+      "completion": []
+    },
+    {
+      "test": "world_integration",
+      "physics_hz": 60,
+      "passed": true,
+      "assertions": 29,
+      "log": "world_integration-hz60.log",
+      "completion": []
+    },
+    {
+      "test": "level1_acceptance",
+      "hz": 60,
+      "passed": true,
+      "assertions": 69
+    },
+    {
+      "test": "level1_acceptance",
+      "hz": 30,
+      "passed": true,
+      "assertions": 69
+    },
+    {
+      "test": "level1_acceptance",
+      "hz": 120,
+      "passed": true,
+      "assertions": 69
+    },
+    {
+      "test": "world1_input",
+      "passed": true,
+      "assertions": 52
+    },
+    {
+      "test": "world1_gestures",
+      "passed": true,
+      "assertions": 56
+    },
+    {
+      "test": "level1_route_acceptance",
+      "hz": 30,
+      "passed": true,
+      "assertions": 71
+    },
+    {
+      "test": "level1_route_acceptance",
+      "hz": 60,
+      "passed": true,
+      "assertions": 71
+    },
+    {
+      "test": "level1_route_acceptance",
+      "hz": 120,
+      "passed": true,
+      "assertions": 71
+    },
+    {
+      "test": "level1_camera_recovery",
+      "passed": true,
+      "assertions": 289
+    }
+  ],
+  "runs": 17,
+  "assertions": 1197,
+  "new_script_parse_checks": [
+    "level1_acceptance.gd",
+    "level1_route_acceptance.gd",
+    "level1_camera_recovery.gd"
+  ],
+  "xogot_device_tested": false,
+  "gameplay_modified": false
+}
