@@ -1,31 +1,43 @@
-# Almost Made It! — WORLD-25
+# Almost Made It! — FOREST-28
 
-## Download the complete Godot/Xogot project
+## Latest complete Godot/Xogot project
 
-**[Download Almost-Made-It-WORLD-25.zip](https://github.com/evaristestiven/Almost-made-it/raw/refs/heads/main/downloads/Almost-Made-It-WORLD-25.zip)**
+**[Download FOREST-28.zip](https://raw.githubusercontent.com/evaristestiven/Almost-made-it/main/downloads/Almost-Made-It-FOREST-28.zip)**
 
-[Alternative file page](https://github.com/evaristestiven/Almost-made-it/blob/main/downloads/Almost-Made-It-WORLD-25.zip) — tap the Download raw file button.
+[Alternative GitHub file page](https://github.com/evaristestiven/Almost-made-it/blob/main/downloads/Almost-Made-It-FOREST-28.zip) — use Download raw file.
 
-The game is inside the ZIP in `downloads/`. Download that ZIP directly; GitHub's Code > Download ZIP adds an extra wrapper around it.
+Download the named ZIP directly. GitHub's automatic Source code archive is a wrapper containing the download files, not the extracted game.
 
-## Open in Xogot
+### Included gameplay upgrade
 
-1. Download `Almost-Made-It-WORLD-25.zip` above. On Safari, choose Download and find it in Files > Downloads.
-2. Tap the ZIP in Files to extract it.
-3. Open/import `AlmostMadeIt-WORLD-25/project.godot` in Xogot.
-4. Allow Godot to regenerate its import cache. Confirm the project title **Almost Made It! WORLD-25**.
-5. Run and select **Level 1: First Steps**.
+- Three raised stepping-stone links, two optional coin gardens and alternating courtyard approaches.
+- Two rising gorge ferries, plus the existing moving platforms, bars, pendulums, recovery decks and checkpoints.
+- Manual swipe-and-drag, jump, avatar, player-follow camera and solid/knockback physics preserved; Levels 2–10 unchanged.
 
-The complete verified project, original asset dependencies, test scripts and seven before/after gameplay-camera pairs are inside the ZIP.
+### New verified nature assets
 
-### Validation and limitations
+Pine_1 and Pine_5 now mix with the original detailed broadleaf trees in Level 1. Their original geometry buffers and texture references are intact. They reuse the existing bark/normal maps and the supplied Leaf_Pine_C atlas, imported at 1024px with mipmaps while preserving the original PNG.
 
-38 source runs / 1,683 assertions; 18 packaged suites / 911 assertions; 115 script parse checks. Tested with Godot 4.6.3, Compatibility renderer. Gameplay collision geometry, controls, camera and Levels 2–10 were preserved. Xogot device performance is unverified. Some terrain faceting and sky banding remain.
+Pine_2/3/4 pairs were checked but not imported in this controlled subset. TwistedTree_5 is excluded because its geometry buffer and referenced bark/leaf textures are incomplete; the report names the missing files.
 
-[Detailed report](downloads/World25-Report.txt) · [SHA-256 checksum](downloads/Almost-Made-It-WORLD-25.sha256)
+### Open in Xogot
 
-## Level 1 gameplay acceptance
+1. Download FOREST-28.zip in Safari and unzip it in Files into a new folder.
+2. Open `AlmostMadeIt-FOREST-28/project.godot` in Xogot; let imports regenerate.
+3. Confirm title **Almost Made It! FOREST-28**, then launch Level 1 First Steps.
+4. Test the optional gardens, precision jumps, rising ferries, knockback and checkpoint recovery.
+5. To inspect both pine models separately, open `scenes/visual_tests/pines_test.tscn` and run that scene.
 
-[Executed acceptance report](qa/level1-acceptance/QA_REPORT.txt) · [Test evidence ZIP](qa/level1-acceptance/Level1-Acceptance-Evidence.zip)
+Keep your previous project as a backup. A new project title/folder may use separate local save storage.
 
-17 runtime runs / 1,197 assertions passed. Continuous completions: 164.63s at 30Hz, 159.18s at 60Hz and 160.12s at 120Hz. These are scripted simulated times, not measured human first clears. No game files changed; keep the verified WORLD-25 project. Mobile performance and full device visual/touch acceptance remain pending.
+### Actual validation
+
+FOREST-28: 6 source runtime runs / 569 assertions; 4 fresh-package suites / 449 assertions; 122 script parse checks; four rendered views inspected. All passed. Full 60Hz route: 165.08 simulated seconds, zero falls, five coins, one victory. ADVENTURE-27's retained gameplay also passed full-route checks at 30/60/120Hz.
+
+These are scripted simulation times, not human first-clear or on-device FPS measurements. iPhone/iPad performance and real touch feel remain unverified. This is a targeted upgrade toward the forest reference; terrain faceting, cloud banding and limited plant variety remain.
+
+[FOREST-28 report](downloads/FOREST28_REPORT.txt) · [Checksum](downloads/Almost-Made-It-FOREST-28.sha256)
+
+### Earlier builds
+
+[ADVENTURE-27](downloads/Almost-Made-It-ADVENTURE-27.zip) · [WORLD-25](downloads/Almost-Made-It-WORLD-25.zip) · [WORLD-25 acceptance evidence](qa/level1-acceptance/QA_REPORT.txt)
