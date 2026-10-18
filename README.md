@@ -23,3 +23,9 @@ The complete verified project, original asset dependencies, test scripts and sev
 38 source runs / 1,683 assertions; 18 packaged suites / 911 assertions; 115 script parse checks. Tested with Godot 4.6.3, Compatibility renderer. Gameplay collision geometry, controls, camera and Levels 2–10 were preserved. Xogot device performance is unverified. Some terrain faceting and sky banding remain.
 
 [Detailed report](downloads/World25-Report.txt) · [SHA-256 checksum](downloads/Almost-Made-It-WORLD-25.sha256)
+
+## Level 1 gameplay acceptance
+
+[Executed acceptance report](qa/level1-acceptance/QA_REPORT.txt) · [Test evidence ZIP](qa/level1-acceptance/Level1-Acceptance-Evidence.zip)
+
+17 runtime runs / 1,197 assertions passed. Continuous completions: 164.63s at 30Hz, 159.18s at 60Hz and 160.12s at 120Hz. These are scripted simulated times, not measured human first clears. No game files changed; keep the verified WORLD-25 project. Mobile performance and full device visual/touch acceptance remain pending.
