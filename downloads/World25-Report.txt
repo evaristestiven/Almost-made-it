@@ -1,0 +1,113 @@
+ALMOST MADE IT! — WORLD-25
+LEVEL 1 IMMERSIVE ENVIRONMENT INTEGRATION
+
+BUILT IN THE EXISTING PLAYABLE LEVEL
+The five areas remain one continuous course. This is a visual pass over the
+existing 60 landings, 855m route, 4 checkpoints and 5 coins. No course rebuild.
+
+Starting Garden: imported stone path accents, flower-bed clusters, butterflies,
+section flags, varied side hills and existing detailed Quaternius tree groves.
+Training Courtyard: three decorative machine installations with six turning,
+meshed gears, purple/gold cloth banners and a textured stone training surface.
+Waterfall Crossing: layered imported rock clusters, a flowing teal/foam shader,
+eight inexpensive mist cards and wood-toned bridge/recovery deck materials.
+Windmill Hills: preserved three animated windmills with scenic fence/bench
+arrangements, small houses, flower beds and varied wooded side islands.
+Finish Plaza: flanking gardens and banners, a continuous curved golden arch,
+custom extruded crown with three colored jewels and a distant island backdrop.
+The finish trigger and its collision geometry have not moved.
+
+COHESION AND DEPTH
+Near detail uses existing clumps, flowers and rocks. Middle-distance landmarks
+identify each district. Ten district side islands and three finish-backdrop
+islands extend the wooded landscape. Trees are the existing imported models,
+with terrain-supported roots. Materials share warm/green/teal/purple accents.
+Sky uses inexpensive layered noise clouds, blue atmospheric gradient and haze.
+Warm sunlight is preserved with modest ambient/exposure/shadow-blur adjustments.
+No additional lights, volumetric clouds, physics decorations or particle systems.
+
+EXISTING ASSETS REUSED
+assets/nature/quaternius/CommonTree_3/:
+ CommonTree_3.gltf, CommonTree_4.gltf, Rock_Medium_3.gltf, Plant_1.gltf,
+ RockPath_Square_Thin.gltf, Pebble_Round_2.gltf.
+All six geometry-buffer and image dependency sets are checked in the package.
+The asset pack was not downloaded or reimported as a whole. Original sources,
+filenames, textures and geometry are unchanged. Existing 512px scenery textures
+and the soft-grass, flower, cloud/bird and windmill systems are reused.
+No imported grass or flower models are claimed: those existing decorations
+remain procedurally authored. Buildings and machinery are custom stylized meshes.
+
+EXACT RUNTIME CHANGES
+Modified: scripts/environment/adventure_garden.gd
+New: scripts/environment/garden_world_details.gd
+New: shaders/world25/ground.gdshader, sky.gdshader, falls.gdshader,
+ flag.gdshader, mist.gdshader (plus Godot UID sidecars).
+No .tscn files changed. The existing Level1 scenery builder attaches the module.
+New tests: tests/world_integration.gd and world_integration_rendered.gd.
+Only the packaged project display name is changed to Almost Made It! WORLD-25
+for identification. Its startup remains scenes/level_select.tscn.
+
+PRESERVATION EVIDENCE
+WORLD25_SOURCE_AUDIT.json: 216 existing runtime/asset files byte-identical;
+only adventure_garden.gd changed among existing runtime files. Project settings
+in the working project are unchanged. No runtime assets were removed.
+Before/after runtime comparison confirms identical collision body types, shape
+sizes, transforms, disabled flags, layers and masks, and identical course data.
+All Level2–10 collision and visual snapshots are unchanged. Scenery has no
+CollisionObject3D nodes. New opaque landmark bounds leave camera-to-avatar
+sightlines clear at the centers of all 60 landings. This is not a claim that
+every possible off-center camera angle has been manually inspected.
+
+EXECUTED SOURCE TESTS
+38 runs, 1683 assertions: all passed.
+115 GDScript parse checks passed. Godot 4.6.3, GL Compatibility.
+Full Level1 route traversed with simulated swipe/jump inputs at 30/60/120Hz.
+60Hz log: COURSE23_COMPLETE seconds=159.18 falls=0 hits=2 coins=5 won=true.
+Recovery suite: 51 checks; all checkpoints, real falls, protection expiry,
+clear input/knockback, camera readiness, 15-second idle, restart and pause.
+Campaign/input/obstacle/gesture/persistence/Almost Moments regressions passed.
+Physics tests exercise actual bodies; scenery adds no fake collisions.
+Fresh-package import and 18 suites passed 911 assertions.
+See WORLD25_PACKAGED_RESULTS.log and WORLD25_CLEAN_IMPORT.log.
+ZIP CRC, resource hashes and all six glTF dependency sets were verified.
+
+RENDERED VERIFICATION
+Seven portrait 720x1280 captures from the actual gameplay Camera3D: garden,
+courtyard entry, courtyard timing, waterfall, windmill, plaza and crown gate.
+Matching before/after images are included in world25-screenshots/. These use
+explicit position fixtures, not a claim that screenshots alone prove traversal.
+No shader compilation errors in the final rendering logs. The rendered review
+caught and corrected gaps in the first arch and reversed custom face winding.
+Software OpenGL captures are not device screenshots or mobile frame-rate tests.
+
+MOBILE BUDGET AND LIMITS
+Repeated vegetation/rocks/pavers use existing regionally culled MultiMeshes.
+Shaders/materials are shared. Details disappear at 60–125m; existing distant
+landscape uses longer visibility ranges. Only six new gears need CPU rotation,
+and only while near the camera; cloth/water/mist motion is shader-driven.
+Sky radiance uses 128px normally/64px low quality. No new large textures.
+Measured draws/primitives are in render logs; these do not establish mobile FPS.
+Use the existing visuals/sky_garden/quality setting (0 low, 1 balanced, 2 high).
+
+REMAINING LIMITATIONS
+This is a targeted enhancement, not an exact reproduction of the concept art.
+Cliffs and distant terrain retain some visibly faceted/repeated geometry.
+Clouds are noise-based, with some visible gradient banding on software OpenGL.
+Some structures and flowers remain simple stylized custom meshes. Terrain and
+shadow quality need an iPhone/iPad review. No device performance, touch testing,
+thermal/power measurements or direct Xogot testing were possible here.
+No production-readiness or guaranteed device-FPS claim is made.
+
+XOGOT INSTALL AND VERIFY
+1. Save/backup the current project and local progression before replacing copies.
+2. Unzip Almost-Made-It-WORLD-25.zip into a new, distinct Files folder.
+3. Transfer/sync the entire AlmostMadeIt-WORLD-25 folder, including assets,
+   shaders and scripts. Repository edits do not update Xogot automatically.
+4. In Xogot import/open that folder's project.godot; verify the project title
+   Almost Made It! WORLD-25. Do not launch an older NINJA/COURSE project copy.
+5. Allow Godot to regenerate the excluded .godot import cache, then run normally
+   and select Level1 First Steps. No save reset is required for Level1 access.
+6. Compare all five areas with the included screenshots. Check hazard visibility
+   while dragging/jumping, edge falls, checkpoint recovery and the finish gate.
+7. Profile frame time on both iPhone and iPad; try low scenery quality if needed.
+   Check materials, foliage alpha, water, crown and text on the device renderer.
