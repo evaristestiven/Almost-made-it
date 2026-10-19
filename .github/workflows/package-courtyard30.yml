@@ -1,0 +1,104 @@
+name: Render and package COURTYARD-30
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/package-courtyard30.yml', 'qa/courtyard30-overlay.b64']
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: courtyard30-package
+  cancel-in-progress: false
+jobs:
+  prototype:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      XDG_DATA_HOME: /tmp/courtyard30/data
+      XDG_CONFIG_HOME: /tmp/courtyard30/config
+      XDG_CACHE_HOME: /tmp/courtyard30/cache
+      LIBGL_ALWAYS_SOFTWARE: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Assemble isolated prototype from verified source
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import urllib.request,hashlib,zipfile,io,base64,json
+          source=urllib.request.urlopen('https://raw.githubusercontent.com/evaristestiven/Almost-made-it/main/downloads/Almost-Made-It-FOREST-29.zip',timeout=120).read()
+          assert hashlib.sha256(source).hexdigest()=='89c1b7b1ce37ac95c019e90e6b414e04f8eac098e6bd79f7dc3b5c08ce862c34'
+          work=Path('/tmp/courtyard30-package/AlmostMadeIt-COURTYARD-30');work.mkdir(parents=True,exist_ok=True)
+          with zipfile.ZipFile(io.BytesIO(source)) as z:
+              assert z.testzip() is None
+              for item in z.infolist():
+                  name=item.filename.split('/',1)[1]
+                  if not name or item.is_dir():continue
+                  p=work/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(z.read(item))
+          data=base64.b64decode(Path('qa/courtyard30-overlay.b64').read_text())
+          assert hashlib.sha256(data).hexdigest()=='6bf8658041f76630b30ec8dc195b909a554347e76fe0358d88d1b61965f81c19'
+          with zipfile.ZipFile(io.BytesIO(data)) as z:
+              for item in z.infolist():
+                  p=work/item.filename;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(z.read(item))
+          manifest=json.loads((work/'COURTYARD30_RUNTIME_SHA256.json').read_text())
+          for n,digest in manifest.items():assert hashlib.sha256((work/n).read_bytes()).hexdigest()==digest,n
+          PY
+      - name: Prepare official Godot and software GL
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq xvfb libgl1-mesa-dri libxinerama1 libxcursor1 libxi6 libxrandr2 libasound2t64
+          curl --retry 3 -fsSL https://github.com/godotengine/godot-builds/releases/download/4.6.3-stable/Godot_v4.6.3-stable_linux.x86_64.zip -o /tmp/godot.zip
+          unzip -q /tmp/godot.zip -d /tmp/godot30
+          echo 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3  /tmp/godot30/Godot_v4.6.3-stable_linux.x86_64' | sha256sum -c -
+          chmod +x /tmp/godot30/Godot_v4.6.3-stable_linux.x86_64
+      - name: Import, test and render five actual views
+        run: |
+          mkdir -p downloads/courtyard30-gallery
+          export COURSE_EVIDENCE_PATH="$GITHUB_WORKSPACE/downloads/courtyard30-gallery"
+          /tmp/godot30/Godot_v4.6.3-stable_linux.x86_64 --headless --path /tmp/courtyard30-package/AlmostMadeIt-COURTYARD-30 --editor --import --quit > downloads/courtyard30-gallery/import.log 2>&1
+          /tmp/godot30/Godot_v4.6.3-stable_linux.x86_64 --headless --path /tmp/courtyard30-package/AlmostMadeIt-COURTYARD-30 --script res://prototypes/training_courtyard/acceptance.gd --fixed-fps 60 > downloads/courtyard30-gallery/acceptance.log 2>&1
+          timeout 180 xvfb-run -a -s "-screen 0 1280x1024x24" /tmp/godot30/Godot_v4.6.3-stable_linux.x86_64 --path /tmp/courtyard30-package/AlmostMadeIt-COURTYARD-30 --rendering-method gl_compatibility --audio-driver Dummy --resolution 1280x960 --script res://prototypes/training_courtyard/capture.gd --fixed-fps 60 > downloads/courtyard30-gallery/render.log 2>&1
+      - name: Verify and package runtime with evidence
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,zipfile,shutil
+          work=Path('/tmp/courtyard30-package/AlmostMadeIt-COURTYARD-30')
+          gallery=Path('downloads/courtyard30-gallery')
+          for name in ['import.log','acceptance.log','render.log']:
+              text=(gallery/name).read_text()
+              assert 'ERROR:' not in text and 'SCRIPT ERROR:' not in text,(name,text)
+          assert '30 checks, ALL PASSED' in (gallery/'acceptance.log').read_text()
+          assert len(list(gallery.glob('*.png')))==5
+          manifest=json.loads((work/'COURTYARD30_RUNTIME_SHA256.json').read_text())
+          for n,digest in manifest.items():assert hashlib.sha256((work/n).read_bytes()).hexdigest()==digest,n
+          for f in work.glob('START-HERE-*'):
+              if f.name!='START-HERE-COURTYARD-30.txt':f.unlink()
+          for f in work.glob('*_RUNTIME_SHA256.json'):
+              if f.name!='COURTYARD30_RUNTIME_SHA256.json':f.unlink()
+          target=Path('downloads/Almost-Made-It-COURTYARD-30.zip')
+          shutil.copytree(gallery,work/'courtyard30-screenshots',dirs_exist_ok=True)
+          with zipfile.ZipFile(target,'w',zipfile.ZIP_DEFLATED) as z:
+              for f in sorted(work.rglob('*')):
+                  if f.is_file() and '.godot' not in f.parts:z.write(f,f.relative_to(work.parent))
+          with zipfile.ZipFile(target) as z:
+              assert z.testzip() is None
+              for n,digest in manifest.items():assert hashlib.sha256(z.read(work.name+'/'+n)).hexdigest()==digest,n
+          checksum=hashlib.sha256(target.read_bytes()).hexdigest()
+          Path('downloads/Almost-Made-It-COURTYARD-30.sha256').write_text(checksum+'  '+target.name+'\n')
+          status={'build':'COURTYARD-30','runtime_files_verified':len(manifest),'remote_acceptance_checks':30,'rendered_views':5,'archive_sha256':checksum,'device_tested':False}
+          Path('downloads/COURTYARD30_VALIDATION.json').write_text(json.dumps(status,indent=2))
+          Path('downloads/COURTYARD30_REPORT.txt').write_text((work/'START-HERE-COURTYARD-30.txt').read_text())
+          print(json.dumps(status))
+          PY
+      - name: Publish isolated prototype and rendered evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add downloads/Almost-Made-It-COURTYARD-30.zip downloads/Almost-Made-It-COURTYARD-30.sha256 downloads/COURTYARD30_VALIDATION.json downloads/COURTYARD30_REPORT.txt downloads/courtyard30-gallery
+          git commit -m "Publish COURTYARD-30 prototype and five real rendered views"
+          git push origin HEAD:main
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: courtyard30-render-and-test-logs
+          path: downloads/courtyard30-gallery
