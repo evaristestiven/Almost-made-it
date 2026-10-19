@@ -35,5 +35,5 @@ PASS: physical fall counts once and restores entrance with recentered camera
 PASS: camera ready and stale inputs cleared after recovery
 PASS: pause/resume clears previous touch input
 PASS: reset restores initial pose, velocity, counters and camera
-COURTYARD_STATS {"batches":123,"imported_species":["Rock_Medium_3","CommonTree_3","CommonTree_4","CommonTree_5","Pine_1","Pine_5","Plant_1"],"instances":2612}
+COURTYARD_STATS {"batches":123,"imported_species":["Rock_Medium_3","CommonTree_3","CommonTree_4","CommonTree_5","Pine_1","Pine_5","Plant_1"],"instances":2520}
 COURTYARD30 RESULT: 30 checks, ALL PASSED

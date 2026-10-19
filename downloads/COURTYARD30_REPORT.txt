@@ -11,7 +11,7 @@ Desktop: V cycles views, R resets, P pauses. Return to normal view before moving
 
 Added only under prototypes/training_courtyard/:
 training_courtyard.tscn, courtyard.gd, craft.gd, sweep.gd,
-acceptance.gd, capture.gd and generated script UID files.
+acceptance.gd, capture.gd, sky.gdshader and generated script UID files.
 All pre-existing project files are byte-identical to the pre-prototype backup.
 Source backup: Courtyard30-Evidence/before-prototype-backup.zip.
 Packaged project title/startup differ solely to make this isolated build easy to open.
@@ -47,7 +47,7 @@ Initial setup defect found and repaired only in prototype: position the animated
 body before adding it to the tree, so physics synchronization retains its arena
 location. Explicit local reset toggles sync while resetting the mechanism pose.
 
-Optimization: 123 grouped MultiMesh batches / 2612 modular instances initially;
+Optimization: 123 grouped MultiMesh batches / 2520 modular instances;
 seven imported mesh variants, regional vegetation groups, visibility culling,
 reused materials, limited shadow distance and no vegetation physics. The extra
 architecture is not a device FPS guarantee. No volumetric clouds or SSAO.
