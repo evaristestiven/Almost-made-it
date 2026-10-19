@@ -35,7 +35,7 @@ jobs:
                   if not name or item.is_dir():continue
                   p=work/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(z.read(item))
           data=base64.b64decode(Path('qa/courtyard30-overlay.b64').read_text())
-          assert hashlib.sha256(data).hexdigest()=='6bf8658041f76630b30ec8dc195b909a554347e76fe0358d88d1b61965f81c19'
+          assert hashlib.sha256(data).hexdigest()=='7874638ebc95195e9ae75a4f0e88ea9bb065dc5c7024747f85002c0d3d4bc7b0'
           with zipfile.ZipFile(io.BytesIO(data)) as z:
               for item in z.infolist():
                   p=work/item.filename;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(z.read(item))
