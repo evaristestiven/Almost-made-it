@@ -35,7 +35,7 @@ jobs:
                   if not name or item.is_dir():continue
                   p=work/name;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(z.read(item))
           data=base64.b64decode(Path('qa/courtyard30-overlay.b64').read_text())
-          assert hashlib.sha256(data).hexdigest()=='7874638ebc95195e9ae75a4f0e88ea9bb065dc5c7024747f85002c0d3d4bc7b0'
+          assert hashlib.sha256(data).hexdigest()=='66924a70fd641fcd052ae173e227d2b2feca72d0d35e8c00ae610476eb85f276'
           with zipfile.ZipFile(io.BytesIO(data)) as z:
               for item in z.infolist():
                   p=work/item.filename;p.parent.mkdir(parents=True,exist_ok=True);p.write_bytes(z.read(item))
@@ -50,6 +50,7 @@ jobs:
           unzip -q /tmp/godot.zip -d /tmp/godot30
           echo 'f64d4ed19fc9df9440321653fcc80df8c6e365ba7b6de0a29e2cfa9fa71bfeb3  /tmp/godot30/Godot_v4.6.3-stable_linux.x86_64' | sha256sum -c -
           chmod +x /tmp/godot30/Godot_v4.6.3-stable_linux.x86_64
+          python -m pip install --quiet Pillow==11.3.0
       - name: Import, test and render five actual views
         run: |
           mkdir -p downloads/courtyard30-gallery
@@ -62,6 +63,7 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           import hashlib,json,zipfile,shutil
+          from PIL import Image
           work=Path('/tmp/courtyard30-package/AlmostMadeIt-COURTYARD-30')
           gallery=Path('downloads/courtyard30-gallery')
           for name in ['import.log','acceptance.log','render.log']:
@@ -69,6 +71,8 @@ jobs:
               assert 'ERROR:' not in text and 'SCRIPT ERROR:' not in text,(name,text)
           assert '30 checks, ALL PASSED' in (gallery/'acceptance.log').read_text()
           assert len(list(gallery.glob('*.png')))==5
+          for png in gallery.glob('*.png'):
+              Image.open(png).convert('RGB').save(png.with_suffix('.jpg'),quality=88,optimize=True)
           manifest=json.loads((work/'COURTYARD30_RUNTIME_SHA256.json').read_text())
           for n,digest in manifest.items():assert hashlib.sha256((work/n).read_bytes()).hexdigest()==digest,n
           for f in work.glob('START-HERE-*'):
