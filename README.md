@@ -1,3 +1,17 @@
+## Standalone Training Courtyard — COURTYARD-30
+
+**[Download the isolated prototype](https://raw.githubusercontent.com/evaristestiven/Almost-made-it/main/downloads/Almost-Made-It-COURTYARD-30.zip)** · [Final report](downloads/COURTYARD30_REPORT.txt) · [Validation](downloads/COURTYARD30_VALIDATION.json)
+
+This separate project opens directly into the Training Courtyard. The existing campaign and playable Level1 remain unchanged. Unzip into a new folder, open project.godot in Xogot and let imports regenerate. Use VIEW to cycle inspection cameras; the ordinary swipe-and-drag and JUMP controls remain.
+
+![Actual Godot gameplay-camera capture](downloads/courtyard30-gallery/05-gameplay.jpg)
+
+Five inspected views: [Overview](downloads/courtyard30-gallery/01-overview.jpg) · [Entrance](downloads/courtyard30-gallery/02-entrance.jpg) · [Mechanism](downloads/courtyard30-gallery/03-central-mechanism.jpg) · [Exit](downloads/courtyard30-gallery/04-exit.jpg) · [Gameplay](downloads/courtyard30-gallery/05-gameplay.jpg).
+
+Prototype acceptance passed30 checks at each30/60/120Hz; remote clean import,30 checks and five GL captures also passed. Slow/fast stationary hits physically moved the avatar0.39m/1.93m. All1595 pre-existing source files are unchanged. Architecture is bespoke modular geometry with existing imported Quaternius vegetation. It remains simpler than the reference; iPhone/iPad performance and final art approval remain unverified.
+
+---
+
 # Almost Made It! — FOREST-29
 
 ## Latest complete Godot/Xogot project
