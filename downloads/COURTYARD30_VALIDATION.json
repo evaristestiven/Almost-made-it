@@ -1,8 +1,8 @@
 {
   "build": "COURTYARD-30",
-  "runtime_files_verified": 254,
+  "runtime_files_verified": 256,
   "remote_acceptance_checks": 30,
   "rendered_views": 5,
-  "archive_sha256": "3855e48ec0e73007e1fab950697ae5a63d8606838bd2a760874cc7c122d8e6f5",
+  "archive_sha256": "06d71f4925e1338e0b67a52fd84290480bd9456f025af37afe1b4907e7fa84ee",
   "device_tested": false
 }
