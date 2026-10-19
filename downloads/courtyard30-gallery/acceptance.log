@@ -1,0 +1,39 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+WARNING: Screen-space AA is only available when using the Forward+ or Mobile renderer.
+     at: viewport_set_screen_space_aa (servers/rendering/renderer_viewport.cpp:1400)
+PASS: prototype reuses original player, follow camera and swipe input
+PASS: safe supported entrance spawn with original collision settings
+PASS: 15 seconds untouched: no automatic movement
+PASS: 15 seconds untouched: stable gameplay camera
+PASS: touch without dragging does not move
+PASS: real multitouch drag and jump work simultaneously
+PASS: releasing jump finger preserves movement touch
+PASS: movement release clears input and decelerates motor
+PASS: four-arm obstacle uses two centered solid cross shapes
+PASS: native fixed-step collision and sweep queries configured
+COURTYARD_IMPACT {"displacement":0.390448600053787,"hits":1,"impulse":1.38425993919373,"peak_knockback":1.21759331226349,"speed":0.25}
+COURTYARD_IMPACT {"displacement":1.92756164073944,"hits":1,"impulse":6.7153491973877,"peak_knockback":6.71471452713013,"speed":1.2}
+PASS: stationary avatar is physically pushed by slow sweep
+PASS: fast sweep produces stronger real displacement and knockback
+PASS: relative-speed response scales impact impulse
+PASS: avatar wholly above sweep collider clears it without a false hit
+PASS: outer waiting ring legitimately dodges all rotating arms
+PASS: holding movement cannot run through stationary solid arm during protection
+PASS: protected contact does not award false damage
+PASS: protection expires without disabling solid collision
+COURTYARD_IMPACT {"displacement":0.737553954124451,"hits":1,"impulse":3.9957902431488,"peak_knockback":3.82912349700928,"speed":0.75}
+PASS: normal physical response works again after protection expires
+PASS: actual swipe and jump clears an approaching moving arm
+PASS: inspection camera view 1 selects correctly
+PASS: inspection camera view 2 selects correctly
+PASS: inspection camera view 3 selects correctly
+PASS: inspection camera view 4 selects correctly
+PASS: inspection camera view 5 selects correctly
+PASS: entrance bridge, full arena outer arc and exit walkway are continuously traversable
+PASS: physical fall counts once and restores entrance with recentered camera
+PASS: camera ready and stale inputs cleared after recovery
+PASS: pause/resume clears previous touch input
+PASS: reset restores initial pose, velocity, counters and camera
+COURTYARD_STATS {"batches":123,"imported_species":["Rock_Medium_3","CommonTree_3","CommonTree_4","CommonTree_5","Pine_1","Pine_5","Plant_1"],"instances":2612}
+COURTYARD30 RESULT: 30 checks, ALL PASSED

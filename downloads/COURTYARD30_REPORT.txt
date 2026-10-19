@@ -1,0 +1,73 @@
+COURTYARD-30 — STANDALONE TRAINING COURTYARD PROTOTYPE
+
+Open project.godot and Run Project. This separate package starts the prototype.
+In the original project, open prototypes/training_courtyard/training_courtyard.tscn
+and Run Current Scene. The original project startup and playable Level1 are unchanged.
+
+Drag to move, JUMP to clear sweeps. Arrow keys and Space are available on desktop.
+RESET restarts this prototype only. PAUSE/RESUME clears input safely.
+VIEW cycles overview, entrance, mechanism, exit and normal gameplay cameras.
+Desktop: V cycles views, R resets, P pauses. Return to normal view before moving.
+
+Added only under prototypes/training_courtyard/:
+training_courtyard.tscn, courtyard.gd, craft.gd, sweep.gd,
+acceptance.gd, capture.gd and generated script UID files.
+All pre-existing project files are byte-identical to the pre-prototype backup.
+Source backup: Courtyard30-Evidence/before-prototype-backup.zip.
+Packaged project title/startup differ solely to make this isolated build easy to open.
+No live Level1, Levels2–10, avatar, input, shared physics, camera or campaign edits.
+No campaign saves/rewards/progression written by the prototype itself.
+
+Built: circular paved stone/metal arena, golden inlays, compass marks, rivets,
+custom turned mechanical hub, four substantial red enamel sweep arms with
+ivory bands, tiered tower roofs, timber braces, banners, wooden bridges with
+individual planks/rails/fasteners, landscaped satellite terraces, sculpted
+cliff undersides and distant islands. Warm directional sunlight, limited
+shadows, atmospheric haze and the existing animated layered-cloud sky.
+Architecture is custom programmatic modular geometry, not imported art.
+Rounded arms use two continuous perpendicular centered box colliders;
+visual bevels are 0.04m, band trim overhang is 0.004m. Collision is conservative
+at small beveled corners rather than a falsely claimed exact rounded hull.
+
+Imported verified Quaternius assets reused without reimporting the whole pack:
+CommonTree_3/4/5, Pine_1/5, Rock_Medium_3, Plant_1 and their existing textures.
+Original files and texture relationships are unchanged. Decorative flowers
+are modest custom five-petal meshes; no professional flower/bush/grass model
+is present in the verified set. Plant_1 provides the leafy ground-cover clumps.
+Missing: authored courtyard architecture/props, authored cloth and flower/grass
+varieties, completed TwistedTree bark and leaf textures. No paid asset assumed.
+
+Physics: original player.gd, touch_controls.gd, follow_camera.gd and spinner.gd
+are reused unchanged. Fixed-step AnimatableBody3D native solids plus the existing
+angular sweep/separation queries and v_contact = omega cross r feed the original
+relative-velocity, effective mass, restitution and friction response.
+Protection blocks hit impulses temporarily while preserving solid collision.
+Safe outside ring supports waiting/dodging; jump clearance is physically tested.
+Initial setup defect found and repaired only in prototype: position the animated
+body before adding it to the tree, so physics synchronization retains its arena
+location. Explicit local reset toggles sync while resetting the mechanism pose.
+
+Optimization: 123 grouped MultiMesh batches / 2612 modular instances initially;
+seven imported mesh variants, regional vegetation groups, visibility culling,
+reused materials, limited shadow distance and no vegetation physics. The extra
+architecture is not a device FPS guarantee. No volumetric clouds or SSAO.
+
+VALIDATION STATUS
+See qa logs and COURTYARD30_VALIDATION.json for actually executed test results.
+Local source 60Hz acceptance: 30 checks passed including15s idle, real touch
+multitouch/release, slow/fast stationary impacts, solid blocking while protected,
+protection expiration, real moving-arm jump, outer-ring dodge, continuous entry-
+arena-exit movement, fall recovery, pause/reset and all five camera selections.
+At60Hz the stationary slow sweep (0.25rad/s) moved the avatar0.39m; fast1.2rad/s
+moved it1.93m. These are measured simulated displacement, not just hit callbacks.
+
+Local graphical display startup was blocked by the sandbox. No local screenshots
+were fabricated. A separate GitHub rendering job attempts five real GL views;
+its status and images are reported separately after execution. Visual parity
+with the reference is not claimed before images have been inspected.
+iPhone/iPad Xogot touch feel, frame pacing, thermals and final visual approval
+remain device/manual checks. The prototype is not integrated into the campaign.
+
+Use screenshot inspection to assess architecture, lighting, foliage, safe route
+readability and the difference from the reference. This is one training location,
+not the five-area Level1 rebuild; no waterfall crossing or windmill area is built.
